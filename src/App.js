@@ -1,24 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from 'react';
+import { MDBContainer } from 'mdb-react-ui-kit';
+import axios from 'axios';
+import MyTodo from './components/MyTodo';
+
+
 
 function App() {
+  
+  
+  const [todoItems, setTodoItems] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/todos/');
+        // Update the state with todo items
+        setTodoItems(response.data);
+      } catch (error) {
+        // Handle errors
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MDBContainer>
+        <MyTodo 
+          todoItems = {todoItems}
+        />
+    </MDBContainer>
   );
 }
 
