@@ -11,7 +11,8 @@ import axios from 'axios';
 
 export default function MyTodo(props) {
     const cardStyles = {
-        marginBottom: '100px',
+        marginBottom: '50px',
+        marginTop: '25px',
       };
     
     const markComplete = async(id) =>{

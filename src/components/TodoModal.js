@@ -8,27 +8,40 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
+  MDBTextArea,
+  MDBInput,
+  MDBCheckbox,
 } from 'mdb-react-ui-kit';
 
-export default function TodoModal() {
-  const [basicModal, setBasicModal] = useState(false);
+export default function TodoModal(props) {
+  // const [basicModal, setBasicModal] = useState(false);
 
-  const toggleOpen = () => setBasicModal(!basicModal);
+  // const toggleOpen = () => setBasicModal(!basicModal);
+  const [checked, setChecked] = useState(false);
 
   return (
     <>
-      <MDBBtn onClick={toggleOpen}>LAUNCH DEMO MODAL</MDBBtn>
-      <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
+      {/* <MDBBtn onClick={toggleOpen}>LAUNCH DEMO MODAL</MDBBtn> */}
+      <MDBModal open={props.BasicModal} onClose={props.ToggleOpen} tabIndex='-1'>
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+              <MDBModalTitle>Create New Task</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={props.ToggleOpen}></MDBBtn>
             </MDBModalHeader>
-            <MDBModalBody>...</MDBModalBody>
+            <MDBModalBody>
+              <MDBInput label="Task Name" id="typeText" type="text" />
+              <MDBTextArea label="Message" id="textAreaExample" rows="{4}" />
+              <MDBCheckbox
+                id='controlledCheckbox'
+                label='Completed'
+                checked={checked}
+                onChange={() => setChecked(!checked)}
+              />
+            </MDBModalBody>
 
             <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={toggleOpen}>
+              <MDBBtn color='secondary' onClick={props.ToggleOpen}>
                 Close
               </MDBBtn>
               <MDBBtn>Save changes</MDBBtn>
