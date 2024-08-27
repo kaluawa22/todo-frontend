@@ -51,8 +51,15 @@ const toggleModal = (todo = null) => {
   };
 
   const closeModal = () =>{
-    setBasicModal(!basicModal);
+    setBasicModal(false);
   };  
+
+  // function to convert dates from YYYY-MM-DD to MM-DD
+  const changeDateFormat = (myDate) => {
+    const parts = myDate.split('-');
+    const formmatedDate = `${parts[1]}-${parts[2]}-${parts[0]}`;
+    return formmatedDate;
+  }
 
       return (
         <MDBContainer>
@@ -64,7 +71,7 @@ const toggleModal = (todo = null) => {
                     {todo.description}
                 </MDBCardText>
                 <MDBCardText>
-                    {props.changeDateFormat(todo.created_at)}
+                    {changeDateFormat(todo.created_at)}
                 </MDBCardText>
                 
                 {/* Conditional Rendering - for mark as complete button */}
@@ -81,11 +88,12 @@ const toggleModal = (todo = null) => {
             </MDBCard>
             ))}
             <SelectedTodo
-                todo={selectedTodo}
-                modalOpen={basicModal}
-                toggleModal={() => toggleModal(null)}
-                markComplete={markComplete}
-                closeModal ={closeModal}
+                todo={selectedTodo}  // Pass the selected todo
+                modalOpen={basicModal}  // Pass modal open state
+                toggleModal={toggleModal}  // Pass modal toggle function
+                markComplete={markComplete}  // Pass markComplete function
+                closeModal={closeModal}  // Pass close modal function
+                changeDateFormat = {changeDateFormat} //pass function to change date formate
             />
 
         </MDBContainer>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   MDBBtn,
   MDBModal,
@@ -10,45 +10,62 @@ import {
   MDBModalFooter,
   MDBTextArea,
   MDBInput,
-  MDBCheckbox,
 } from 'mdb-react-ui-kit';
 
 export default function SelectedTodo(props) {
-  // const [basicModal, setBasicModal] = useState(false);
+  const { todo, modalOpen, closeModal, markComplete } = props;
 
-  // const toggleOpen = () => setBasicModal(!basicModal);
-//   const [checked, setChecked] = useState(false);
+  const cardStyles = {
+    marginBottom: '10px',
+  };
 
   return (
-    <>
-      {/* <MDBBtn onClick={toggleOpen}>LAUNCH DEMO MODAL</MDBBtn> */}
-      <MDBModal open={props.modalOpen} onClose={props.closeModal} tabIndex='-1'>
-        <MDBModalDialog>
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Create New Task</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={props.ToggleOpen}></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
-              <MDBInput label="Task Name" id="typeText" type="text" />
-              <MDBTextArea label="Message" id="textAreaExample" rows="{4}" />
-              {/* <MDBCheckbox
-                id='controlledCheckbox'
-                label='Completed'
-                checked={checked}
-                onChange={() => setChecked(!checked)}
-              /> */}
-            </MDBModalBody>
+    <MDBModal open={modalOpen} onClose={closeModal} tabIndex='-1'>
+      <MDBModalDialog>
+        <MDBModalContent>
+          <MDBModalHeader>
+            <MDBModalTitle>Task Details</MDBModalTitle>
+            <MDBBtn className='btn-close' color='none' onClick={closeModal}></MDBBtn>
+          </MDBModalHeader>
+          <MDBModalBody>
+            <MDBInput 
+              label="Task Name" 
+              id="typeText" 
+              type="text" 
+              value={todo?.title || ''} // Display the task title
+              disabled
+              style={cardStyles}
+            />
+            <MDBTextArea 
+              label="Message" 
+              id="textAreaExample" 
+              rows="{4}" 
+              value={todo?.description || ''} // Display the task description
+              disabled
+              style={cardStyles}
+            />
+            <MDBInput 
+              label="Created At" 
+              id="createdAt" 
+              type="text" 
+              value={props.changeDateFormat(todo?.created_at || '')} // Display the created date
+              disabled
+              style={cardStyles}
+            />
+          </MDBModalBody>
 
-            <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={props.ToggleOpen}>
-                Close
+          <MDBModalFooter>
+            {!todo?.completed && (
+              <MDBBtn color='success' onClick={() => markComplete(todo.id)}>
+                Mark as Complete
               </MDBBtn>
-              <MDBBtn>Save changes</MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
-    </>
+            )}
+            <MDBBtn color='secondary' onClick={closeModal}>
+              Close
+            </MDBBtn>
+          </MDBModalFooter>
+        </MDBModalContent>
+      </MDBModalDialog>
+    </MDBModal>
   );
 }
