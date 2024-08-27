@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     MDBCard,
     MDBCardBody,
@@ -8,8 +8,15 @@ import {
     MDBContainer 
   } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import SelectedTodo from "./SelectedTodo";
+
+
+
 
 export default function MyTodo(props) {
+    const [basicModal, setBasicModal] = useState(false);
+    const [selectedTodo, setSelectedTodo] = useState("null");
+
     const cardStyles = {
         marginBottom: '50px',
         marginTop: '25px',
@@ -38,12 +45,19 @@ export default function MyTodo(props) {
 
     }
 };
-    
+const toggleModal = (todo = null) => {
+    setSelectedTodo(todo); // Set the selected todo
+    setBasicModal(!basicModal); // Toggle modal state
+  };
+
+  const closeModal = () =>{
+    setBasicModal(!basicModal);
+  };  
 
       return (
         <MDBContainer>
             {props.todoItems.map((todo) => (
-            <MDBCard style={cardStyles}>
+            <MDBCard style={cardStyles} key={todo.id} onClick={() => toggleModal(todo)}>
             <MDBCardBody>
                 <MDBCardTitle>{todo.title}</MDBCardTitle>
                 <MDBCardText>
@@ -66,6 +80,14 @@ export default function MyTodo(props) {
             
             </MDBCard>
             ))}
+            <SelectedTodo
+                todo={selectedTodo}
+                modalOpen={basicModal}
+                toggleModal={() => toggleModal(null)}
+                markComplete={markComplete}
+                closeModal ={closeModal}
+            />
+
         </MDBContainer>
       );
 
