@@ -29,12 +29,7 @@ function App() {
     fetchData();
   }, []);
   
-  // function to convert dates from YYYY-MM-DD to MM-DD
-  const changeDateFormat = (myDate) => {
-    const parts = myDate.split('-');
-    const formmatedDate = `${parts[1]}-${parts[2]}-${parts[0]}`;
-    return formmatedDate;
-  }
+  
 
 
   return (
@@ -44,7 +39,6 @@ function App() {
         <MyTodo 
           todoItems = {todoItems}
           setTodoItems = {setTodoItems}
-          changeDateFormat = {changeDateFormat}
         />
     </MDBContainer>
   );

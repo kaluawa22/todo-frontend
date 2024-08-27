@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     MDBCard,
     MDBCardBody,
@@ -8,10 +8,18 @@ import {
     MDBContainer 
   } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import SelectedTodo from "./SelectedTodo";
+
+
+
 
 export default function MyTodo(props) {
+    const [basicModal, setBasicModal] = useState(false);
+    const [selectedTodo, setSelectedTodo] = useState("null");
+
     const cardStyles = {
-        marginBottom: '100px',
+        marginBottom: '50px',
+        marginTop: '25px',
       };
     
     const markComplete = async(id) =>{
@@ -37,19 +45,33 @@ export default function MyTodo(props) {
 
     }
 };
-    
+const toggleModal = (todo = null) => {
+    setSelectedTodo(todo); // Set the selected todo
+    setBasicModal(!basicModal); // Toggle modal state
+  };
+
+  const closeModal = () =>{
+    setBasicModal(false);
+  };  
+
+  // function to convert dates from YYYY-MM-DD to MM-DD
+  const changeDateFormat = (myDate) => {
+    const parts = myDate.split('-');
+    const formmatedDate = `${parts[1]}-${parts[2]}-${parts[0]}`;
+    return formmatedDate;
+  }
 
       return (
         <MDBContainer>
             {props.todoItems.map((todo) => (
-            <MDBCard style={cardStyles}>
+            <MDBCard style={cardStyles} key={todo.id} onClick={() => toggleModal(todo)}>
             <MDBCardBody>
                 <MDBCardTitle>{todo.title}</MDBCardTitle>
                 <MDBCardText>
                     {todo.description}
                 </MDBCardText>
                 <MDBCardText>
-                    {props.changeDateFormat(todo.created_at)}
+                    {changeDateFormat(todo.created_at)}
                 </MDBCardText>
                 
                 {/* Conditional Rendering - for mark as complete button */}
@@ -65,6 +87,15 @@ export default function MyTodo(props) {
             
             </MDBCard>
             ))}
+            <SelectedTodo
+                todo={selectedTodo}  // Pass the selected todo
+                modalOpen={basicModal}  // Pass modal open state
+                toggleModal={toggleModal}  // Pass modal toggle function
+                markComplete={markComplete}  // Pass markComplete function
+                closeModal={closeModal}  // Pass close modal function
+                changeDateFormat = {changeDateFormat} //pass function to change date formate
+            />
+
         </MDBContainer>
       );
 
