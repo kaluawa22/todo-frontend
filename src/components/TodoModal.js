@@ -10,25 +10,20 @@ import {
   MDBModalFooter,
 } from 'mdb-react-ui-kit';
 
-export default function TodoModal() {
-  const [basicModal, setBasicModal] = useState(false);
-
-  const toggleOpen = () => setBasicModal(!basicModal);
-
-  return (
-    <>
-      <MDBBtn onClick={toggleOpen}>LAUNCH DEMO MODAL</MDBBtn>
-      <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
+export default function TodoModal({ showModal, toggleModal }) {
+    return (
+      <MDBModal isOpen={showModal} toggle={toggleModal}>
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
               <MDBModalTitle>Modal title</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+              <MDBBtn className='btn-close' color='none' onClick={toggleModal}></MDBBtn>
             </MDBModalHeader>
-            <MDBModalBody>...</MDBModalBody>
-
+            <MDBModalBody>
+              {/* Add your form or content here */}
+            </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={toggleOpen}>
+              <MDBBtn color='secondary' onClick={toggleModal}>
                 Close
               </MDBBtn>
               <MDBBtn>Save changes</MDBBtn>
@@ -36,6 +31,5 @@ export default function TodoModal() {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-    </>
-  );
-}
+    );
+  }
