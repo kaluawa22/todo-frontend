@@ -95,5 +95,6 @@ export default function TodoModal(props) {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-    );
-  }
+    </>
+  );
+}
