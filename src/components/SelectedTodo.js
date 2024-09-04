@@ -9,7 +9,7 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBTextArea,
-  MDBInput,
+  MDBInput, MDBListGroup, MDBListGroupItem, MDBCheckbox
 } from 'mdb-react-ui-kit';
 
 export default function SelectedTodo(props) {
@@ -52,6 +52,28 @@ export default function SelectedTodo(props) {
               disabled
               style={cardStyles}
             />
+            {/* Check List Section */}
+            <MDBListGroup style={{ minWidth: '22rem' }} light>
+            <MDBListGroupItem tag='label'>
+              <MDBCheckbox label='Cras justo odio' />
+            </MDBListGroupItem>
+
+            <MDBListGroupItem tag='label'>
+              <MDBCheckbox label='Dapibus ac facilisis in' />
+            </MDBListGroupItem>
+
+            <MDBListGroupItem tag='label'>
+              <MDBCheckbox label='Morbi leo risus' />
+            </MDBListGroupItem>
+
+            <MDBListGroupItem tag='label'>
+              <MDBCheckbox label='Porta ac consectetur ac' />
+            </MDBListGroupItem>
+
+            <MDBListGroupItem tag='label'>
+              <MDBCheckbox label='Vestibulum at eros' />
+            </MDBListGroupItem>
+            </MDBListGroup>
           </MDBModalBody>
 
           <MDBModalFooter>
