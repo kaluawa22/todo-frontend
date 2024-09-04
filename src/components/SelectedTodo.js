@@ -9,11 +9,18 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBTextArea,
+<<<<<<< HEAD
   MDBInput, MDBListGroup, MDBListGroupItem, MDBCheckbox
+=======
+  MDBInput, 
+  MDBListGroup,
+  MDBListGroupItem,
+  MDBCheckbox
+>>>>>>> 34f7630a3785015b3310fd044bdd9df5d9de539e
 } from 'mdb-react-ui-kit';
 
 export default function SelectedTodo(props) {
-  const { todo, modalOpen, closeModal, markComplete } = props;
+  const { todo, modalOpen, closeModal, markComplete, markChecklistItemComplete } = props;
 
   const cardStyles = {
     marginBottom: '10px',
@@ -52,28 +59,26 @@ export default function SelectedTodo(props) {
               disabled
               style={cardStyles}
             />
-            {/* Check List Section */}
+
+            {/* Checklist Section */}
+            <h5>Checklist</h5>
             <MDBListGroup style={{ minWidth: '22rem' }} light>
-            <MDBListGroupItem tag='label'>
-              <MDBCheckbox label='Cras justo odio' />
-            </MDBListGroupItem>
-
-            <MDBListGroupItem tag='label'>
-              <MDBCheckbox label='Dapibus ac facilisis in' />
-            </MDBListGroupItem>
-
-            <MDBListGroupItem tag='label'>
-              <MDBCheckbox label='Morbi leo risus' />
-            </MDBListGroupItem>
-
-            <MDBListGroupItem tag='label'>
-              <MDBCheckbox label='Porta ac consectetur ac' />
-            </MDBListGroupItem>
-
-            <MDBListGroupItem tag='label'>
-              <MDBCheckbox label='Vestibulum at eros' />
-            </MDBListGroupItem>
+              {todo?.checklist_items?.length > 0 ? (
+                todo.checklist_items.map((item) => (
+                  <MDBListGroupItem key={item.id} tag='label'>
+                    <MDBCheckbox 
+                      label={item.title} 
+                      checked={item.completed} 
+                      onChange={() => markChecklistItemComplete(todo.id, item.id)}  // Call the function on change
+                    />
+                  </MDBListGroupItem>
+                ))
+              ) : (
+                <p>No checklist items available</p>
+              )}
             </MDBListGroup>
+
+
           </MDBModalBody>
 
           <MDBModalFooter>
