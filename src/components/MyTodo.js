@@ -22,6 +22,7 @@ export default function MyTodo(props) {
         marginTop: '25px',
       };
     
+    // function to mark todo item as complete
     const markComplete = async(id) =>{
         try {
             const response = await axios.patch(`http://127.0.0.1:8000/api/todos/${id}/`, {
@@ -40,26 +41,57 @@ export default function MyTodo(props) {
         }
 
 
-    } catch(error) {
-        console.error('Error:', error);
+        } catch(error) {
+            console.error('Error:', error);
 
+        }
+    };
+
+    // function to mark check list complete 
+    const markChecklistItemComplete = async(todoId, checklistItemId) => {
+        try {
+            const response = await axios.patch(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`, {
+                completed: true
+            });
+    
+            if (response.status === 200) {
+                // Update the state to reflect the change in the completed status
+                props.setTodoItems(prevItems =>
+                    prevItems.map(todo =>
+                        todo.id === todoId ? {
+                            ...todo,
+                            checklist_items: todo.checklist_items.map(item =>
+                                item.id === checklistItemId ? {...item, completed: true} : item
+                            )
+                        } : todo
+                    )
+                );
+            } else {
+                console.error("Failed to mark checklist item as completed");
+            }
+    
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+
+
+    const toggleModal = (todo = null) => {
+        setSelectedTodo(todo); // Set the selected todo
+        setBasicModal(!basicModal); // Toggle modal state
+    };
+
+    const closeModal = () =>{
+        setBasicModal(false);
+    };  
+
+    // function to convert dates from YYYY-MM-DD to MM-DD
+    const changeDateFormat = (myDate) => {
+        const parts = myDate.split('-');
+        const formmatedDate = `${parts[1]}-${parts[2]}-${parts[0]}`;
+        return formmatedDate;
     }
-};
-const toggleModal = (todo = null) => {
-    setSelectedTodo(todo); // Set the selected todo
-    setBasicModal(!basicModal); // Toggle modal state
-  };
-
-  const closeModal = () =>{
-    setBasicModal(false);
-  };  
-
-  // function to convert dates from YYYY-MM-DD to MM-DD
-  const changeDateFormat = (myDate) => {
-    const parts = myDate.split('-');
-    const formmatedDate = `${parts[1]}-${parts[2]}-${parts[0]}`;
-    return formmatedDate;
-  }
 
       return (
         <MDBContainer>
@@ -94,6 +126,7 @@ const toggleModal = (todo = null) => {
                 markComplete={markComplete}  // Pass markComplete function
                 closeModal={closeModal}  // Pass close modal function
                 changeDateFormat = {changeDateFormat} //pass function to change date formate
+                markChecklistItemComplete ={markChecklistItemComplete}
             />
 
         </MDBContainer>

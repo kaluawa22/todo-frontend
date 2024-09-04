@@ -9,11 +9,14 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBTextArea,
-  MDBInput,
+  MDBInput, 
+  MDBListGroup,
+  MDBListGroupItem,
+  MDBCheckbox
 } from 'mdb-react-ui-kit';
 
 export default function SelectedTodo(props) {
-  const { todo, modalOpen, closeModal, markComplete } = props;
+  const { todo, modalOpen, closeModal, markComplete, markChecklistItemComplete } = props;
 
   const cardStyles = {
     marginBottom: '10px',
@@ -52,6 +55,26 @@ export default function SelectedTodo(props) {
               disabled
               style={cardStyles}
             />
+
+            {/* Checklist Section */}
+            <h5>Checklist</h5>
+            <MDBListGroup style={{ minWidth: '22rem' }} light>
+              {todo?.checklist_items?.length > 0 ? (
+                todo.checklist_items.map((item) => (
+                  <MDBListGroupItem key={item.id} tag='label'>
+                    <MDBCheckbox 
+                      label={item.title} 
+                      checked={item.completed} 
+                      onChange={() => markChecklistItemComplete(todo.id, item.id)}  // Call the function on change
+                    />
+                  </MDBListGroupItem>
+                ))
+              ) : (
+                <p>No checklist items available</p>
+              )}
+            </MDBListGroup>
+
+
           </MDBModalBody>
 
           <MDBModalFooter>
