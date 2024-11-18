@@ -35,7 +35,9 @@ function App() {
   return (
     <MDBContainer>
         {/* <InputTodo /> */}
-        <MyNavBar />
+        <MyNavBar 
+        setTodoItems = {setTodoItems}
+        />
         <MyTodo 
           todoItems = {todoItems}
           setTodoItems = {setTodoItems}
