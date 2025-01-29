@@ -116,7 +116,7 @@ const handleClose = () =>{
                       ))}
                     </div>
                   ) : (
-                    <MDBBadge color="dark" light style={{marginRight: ".5rem"}}>No labels</MDBBadge>
+                    <MDBBadge color="dark" light style={{marginRight: ".5rem"}}></MDBBadge>
                   )}
                   <MDBBadge color='dark' light>Created On {props.changeDateFormat(todo?.created_at || '')}</MDBBadge>
                 </div>
@@ -132,7 +132,7 @@ const handleClose = () =>{
                       ))}
                     </div>
                   ) : (
-                    <MDBBadge color="dark" light style={{marginRight: ".5rem"}}>No labels</MDBBadge>
+                    <MDBBadge color="dark" light style={{marginRight: ".5rem"}}></MDBBadge>
                   )}
                   <MDBBadge color='dark' light>Created On {props.changeDateFormat(todo?.created_at || '')}</MDBBadge>
                 </>
@@ -152,7 +152,7 @@ const handleClose = () =>{
             >
               {editingDescMode ? (
                 <MDBTextArea 
-                  label="Description" 
+                  noLabel
                   id="typeText" 
                   rows={5} 
                   value={editedTodoDescription}
@@ -170,7 +170,7 @@ const handleClose = () =>{
                   <p>{todo.description}</p>
                 ) : (
                   <MDBTextArea 
-                    label="Enter A Description" 
+                    noLabel
                     id="typeText" 
                     rows={5} 
                     value={editedTodoDescription}

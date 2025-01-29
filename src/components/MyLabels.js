@@ -25,7 +25,7 @@ export default function MyLabels(props) {
     <div>
 
         <MDBDropdown group >
-              <MDBDropdownToggle color="dark"  onClick={getLabelItems}>Choose Label</MDBDropdownToggle>
+              <MDBDropdownToggle color="dark"  onClick={getLabelItems}>Label</MDBDropdownToggle>
               <MDBDropdownMenu autoClose="inside">
                 
                 {labelItems.map((label) => (
