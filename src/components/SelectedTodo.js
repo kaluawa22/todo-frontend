@@ -136,12 +136,8 @@ const handleClose = () =>{
                       ))}
                     </div>
                   ) : (
-<<<<<<< HEAD
                    
                     <div></div>
-=======
-                    <MDBBadge color="dark" light style={{marginRight: ".5rem"}}></MDBBadge>
->>>>>>> 21e38cc100cfd3c2dc2d0718914691f3015a559c
                   )}
                   <MDBBadge color='dark' light>Created On {props.changeDateFormat(todo?.created_at || '')}</MDBBadge>
                 </>
@@ -213,8 +209,9 @@ const handleClose = () =>{
               {/* Right side with MyLabels */}
               <div style={{ flex: 1 }}>
                 <MyLabels 
+                  todo={todo}
                   todoId={todo.id}
-                  // labelItems={labelItems}
+                  labelItems={labelItems}
                 />
     
               </div>

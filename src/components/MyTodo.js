@@ -506,7 +506,7 @@ export default function MyTodo(props) {
                 editTodoName={editTodoName }
                 deleteTodoItem={deleteTodoItem}
                 editTodoDescription={editTodoDescription}
-                // labelItems={props.labelItems}
+                labelItems={props.labelItems}
                 // handleCheckboxChange={handleCheckboxChange} 
             />
 

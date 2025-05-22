@@ -49,20 +49,22 @@ export default function MyLabels(props) {
   return (
     <div>
 
-        <MDBDropdown group >
-              <MDBDropdownToggle color="dark"  onClick={getLabelItems}>Labels</MDBDropdownToggle>
-              <MDBDropdownMenu autoClose="inside">
-                
-                {labelItems.map((label) => (
-                    <MDBDropdownItem key={label.id} link>
-                        {label.title}
-                    </MDBDropdownItem>
-                ))}
+        <MDBDropdown group style={{display: "none"}} >
+          <MDBDropdownToggle color="dark"  onClick={getLabelItems}>Labels</MDBDropdownToggle>
+            <MDBDropdownMenu autoClose="inside">
+              {labelItems && labelItems.length > 0 ? (
+                labelItems.map((label) => (
+                  <MDBDropdownItem key={label.id}>
+                    {label.title}
+                  </MDBDropdownItem>
+                ))
+              ) : (
+                <MDBDropdownItem disabled>No labels found</MDBDropdownItem>
+              )}
+            </MDBDropdownMenu>
+          </MDBDropdown>
 
-              </MDBDropdownMenu>
-        </MDBDropdown>
-
-        <MDBDropdown group>
+        <MDBDropdown group style={{ }}>
           <MDBDropdownToggle color="dark" onClick={getLabelItems}>
             {/* {todo.labels?.[0]?.title || 'No Label'} */}
             Labels
