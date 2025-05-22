@@ -3,7 +3,7 @@ import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem,} from
 import axios from 'axios';
 
 export default function MyLabels(props) {
-   const {} = props;
+   const {todo} = props;
 
    const [labelItems, setLabelItems] = useState([])
 
@@ -19,13 +19,38 @@ export default function MyLabels(props) {
     }
    
 
+      // function to update current Label from list of labels in the backend
 
+    //   const updateTodoLabel = async (todId, labelItems) => {
+    //     try{
+    //       todo = todo.id
+    //     }
+    // }
+    
+    const handleLabelToggle = (label) => {
+      // Check if the label is already selected
+      const isSelected = todo.labels?.some((selectedLabel) => selectedLabel.id === label.id);
+    
+      const updatedLabels = isSelected
+        ? todo.labels.filter((selectedLabel) => selectedLabel.id !== label.id) // Remove label
+        : [...(todo.labels || []), label]; // Add label
+    
+      // Update the todo state
+      // setTodo((prevTodo) => ({
+      //   ...prevTodo,
+      //   labels: updatedLabels,
+      // }));
+    
+      // Optionally, update the backend with the new label state
+      // axios.patch(`/api/todos/${todo.id}/`, { labels: updatedLabels });
+    };
+    
 
   return (
     <div>
 
         <MDBDropdown group >
-              <MDBDropdownToggle color="dark"  onClick={getLabelItems}>Choose Label</MDBDropdownToggle>
+              <MDBDropdownToggle color="dark"  onClick={getLabelItems}>Labels</MDBDropdownToggle>
               <MDBDropdownMenu autoClose="inside">
                 
                 {labelItems.map((label) => (
@@ -35,7 +60,29 @@ export default function MyLabels(props) {
                 ))}
 
               </MDBDropdownMenu>
-            </MDBDropdown>
+        </MDBDropdown>
+
+        <MDBDropdown group>
+          <MDBDropdownToggle color="dark" onClick={getLabelItems}>
+            {/* {todo.labels?.[0]?.title || 'No Label'} */}
+            Labels
+          </MDBDropdownToggle>
+          <MDBDropdownMenu autoClose="inside">
+            {labelItems.map((label) => (
+              <MDBDropdownItem key={label.id}>
+                <label className="d-flex align-items-center">
+                  <input
+                    type="checkbox"
+                    checked={todo.labels?.some((selectedLabel) => selectedLabel.id === label.id)}
+                    onChange={() => handleLabelToggle(label)}
+                    style={{ marginRight: '8px' }}
+                  />
+                  {label.title}
+                </label>
+              </MDBDropdownItem>
+            ))}
+          </MDBDropdownMenu>
+        </MDBDropdown>
     </div>
    
   );

@@ -13,6 +13,7 @@ function App() {
   
   
   const [todoItems, setTodoItems] = useState([]);
+  // const [labelItems, setLabelItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +30,18 @@ function App() {
     fetchData();
   }, []);
   
+  // useEffect(() => {
+  //   const fetchLabels = async () => {
+  //     try {
+  //       const response = await axios.get('http://127.0.0.1:8000/api/labels/');
+  //       setLabelItems(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching labels:', error);
+  //     }
+  //   };
+  
+  //   fetchLabels();
+  // }, []);
   
 
 
@@ -41,6 +54,8 @@ function App() {
         <MyTodo 
           todoItems = {todoItems}
           setTodoItems = {setTodoItems}
+          // labelItems = {labelItems}
+
         />
     </MDBContainer>
   );

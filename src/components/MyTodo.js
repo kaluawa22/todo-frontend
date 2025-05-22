@@ -44,9 +44,16 @@ export default function MyTodo(props) {
     //             label: newTodoLabel
     //         }));
     //         // make the api call to update todo label in the backend
-    //         const response = await.axios.patch(`http://127.0.0.1:8000/api/todos/${todoId}/`)
+    //         const response = await axios.patch(`http://127.0.0.1:8000/api/todos/${todoId}/labels`)
+    //     }catch(error){
+    //         console.error('Error:', error);
+
     //     }
-    // }
+
+    // };
+
+  
+
     // function to edit todo description
 
 
@@ -228,7 +235,7 @@ export default function MyTodo(props) {
     const updateChecklistItem = async (todoId, checklistItemId, newChecklistTitle) => {
 
         try{
-            const todo = props.todoItems.find(todo => todo.id === todoId);
+            // const todo = props.todoItems.find(todo => todo.id === todoId);
             // const checklistItem = todo?.checklist_items.find(item => item.id === checklistItemId);
             
 
@@ -409,7 +416,7 @@ export default function MyTodo(props) {
         }
     };
     
-    
+  
     
     
 
@@ -458,10 +465,10 @@ export default function MyTodo(props) {
                         ))}
                     </div>
                 ) : (
-                    <MDBBadge color="dark" light>
-                                No labels
-                    </MDBBadge>
+                    <div>
 
+                    </div>
+                 
                 )}
 
                 <MDBCardText style={{marginTop: "1rem",}}>
@@ -499,6 +506,7 @@ export default function MyTodo(props) {
                 editTodoName={editTodoName }
                 deleteTodoItem={deleteTodoItem}
                 editTodoDescription={editTodoDescription}
+                // labelItems={props.labelItems}
                 // handleCheckboxChange={handleCheckboxChange} 
             />
 

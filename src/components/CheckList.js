@@ -154,7 +154,7 @@ export default function Checklist({ checklistItems, markChecklistItemComplete, t
             </MDBListGroupItem>
         ))
       ) : (
-        <p>No checklist items available</p>
+        <p></p>
       )}
     </MDBListGroup>
 

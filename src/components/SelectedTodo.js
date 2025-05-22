@@ -21,7 +21,7 @@ import Checklist from './CheckList';
 import MyLabels from './MyLabels';
 
 export default function SelectedTodo(props) {
-  const { todo, modalOpen, closeModal, markComplete, markChecklistItemComplete, handleCheckboxChange, addChecklistItem, updateChecklistItem, deleteChecklistItem,editTodoName, deleteTodoItem, editTodoDescription  } = props;
+  const { todo, modalOpen, closeModal, markComplete, markChecklistItemComplete, handleCheckboxChange, addChecklistItem, updateChecklistItem, deleteChecklistItem,editTodoName, deleteTodoItem, editTodoDescription, labelItems  } = props;
 
   const cardStyles = {
     marginBottom: '10px',
@@ -72,6 +72,10 @@ const handleClose = () =>{
   setEditingDescMode(false);
 
 }
+
+
+
+
 
 
 
@@ -132,7 +136,8 @@ const handleClose = () =>{
                       ))}
                     </div>
                   ) : (
-                    <MDBBadge color="dark" light style={{marginRight: ".5rem"}}>No labels</MDBBadge>
+                   
+                    <div></div>
                   )}
                   <MDBBadge color='dark' light>Created On {props.changeDateFormat(todo?.created_at || '')}</MDBBadge>
                 </>
@@ -203,8 +208,13 @@ const handleClose = () =>{
 
               {/* Right side with MyLabels */}
               <div style={{ flex: 1 }}>
-                <MyLabels />
+                <MyLabels 
+                  todoId={todo.id}
+                  // labelItems={labelItems}
+                />
+    
               </div>
+              
             </div>
 
           </MDBModalBody>
