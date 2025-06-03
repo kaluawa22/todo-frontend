@@ -7,6 +7,7 @@ import MyTodo from './components/MyTodo';
 import InputTodo from './components/InputTodo';
 import MyNavBar from "./components/MyNavBar";
 import Login from './components/Login';
+import Register from './components/Register';
 import { useLocation, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -46,13 +47,22 @@ function App() {
   return (
     <MDBContainer>
       {/* Only show navbar if not on /login */}
-      {location.pathname !== '/login' && (
+     {location.pathname !== '/' && location.pathname !== '/register' && (
         <MyNavBar setTodoItems={setTodoItems} />
       )}
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={
+          <Login 
+          />
+          } 
+        />
+        <Route path="/register" element={
+          <Register 
+          />
+          } 
+        />
         <Route
-          path="/"
+          path="/todos"
           element={
             <MyTodo
               todoItems={todoItems}
