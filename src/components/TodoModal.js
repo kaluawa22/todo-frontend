@@ -32,6 +32,7 @@ export default function TodoModal(props) {
 
   // Handle form submission
   const handleSubmit = async() =>{
+    const accessToken = sessionStorage.getItem('accessToken');
     // make sure keys in this object matches the serializers for todo model in backend.
     const newTask = {
       title: taskName,
@@ -41,7 +42,14 @@ export default function TodoModal(props) {
       
     };
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/todos/', newTask); // Adjust the URL to your endpoint
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/todos/', 
+        newTask,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }); // Adjust the URL to your endpoint
       console.log('Task created successfully:', response.data);
       // Optionally, you can call a function to update the task list in the parent component
       props.onTaskCreated(response.data);

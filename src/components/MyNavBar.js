@@ -4,6 +4,7 @@ import {
   MDBBtn,
   MDBContainer
 } from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
 import TodoModal from './TodoModal';
 
 
@@ -12,6 +13,8 @@ export default function MyNavBar(props) {
   const { setTodoItems } = props;
 
   const [basicModal, setBasicModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const ToggleOpen = () => {
     setBasicModal(true);
@@ -26,6 +29,13 @@ export default function MyNavBar(props) {
     setTodoItems(prevTodos => [...prevTodos, newTask]); // Add new task to the existing list
   };
 
+
+  const handleSignOut = () => {
+    sessionStorage.removeItem('accessToken'); // Clear the access token from session storage    
+    sessionStorage.removeItem('refreshToken'); // Clear the refresh token from session storage
+    navigate('/'); // Redirect to the login page
+  };
+
   return (
     <>
       <MDBNavbar light bgColor='light'>
@@ -38,6 +48,15 @@ export default function MyNavBar(props) {
 
         <MDBBtn onClick={ToggleOpen} className='mx-2' color='dark' type='button'>
           New Task
+        </MDBBtn>
+
+        <MDBBtn 
+          className='mx-2' 
+          color='dark' 
+          type='button'
+          onClick={handleSignOut}
+        >
+          Sign Out
         </MDBBtn>
 
       </div>

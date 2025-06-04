@@ -8,26 +8,49 @@ import InputTodo from './components/InputTodo';
 import MyNavBar from "./components/MyNavBar";
 import Login from './components/Login';
 import Register from './components/Register';
+import NotFound from './components/NotFound';
 import { useLocation, Routes, Route } from 'react-router-dom';
 
 function App() {
   const [todoItems, setTodoItems] = useState([]);
+  const [accessToken, setAccessToken] = useState(sessionStorage.getItem('accessToken'));
   // const [labelItems, setLabelItems] = useState([]);
   const location = useLocation();
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const accessToken = sessionStorage.getItem('accessToken');
+  //       const response = await axios.get('http://127.0.0.1:8000/api/todos/', {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },  
+  //       });
+  //       setTodoItems(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
+    if (!accessToken) return;
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/todos/');
+        const response = await axios.get('http://127.0.0.1:8000/api/todos/', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },  
+        });
         setTodoItems(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
-  }, []);
-
+  }, [accessToken]); // <-- rerun when accessToken changes
 
 
 
@@ -52,7 +75,8 @@ function App() {
       )}
       <Routes>
         <Route path="/" element={
-          <Login 
+          <Login
+            setAccessToken={setAccessToken} 
           />
           } 
         />
@@ -69,6 +93,11 @@ function App() {
               setTodoItems={setTodoItems}
             />
           }
+        />
+        <Route path="*" element={
+          <NotFound 
+          />
+          } 
         />
       </Routes>
     </MDBContainer>
