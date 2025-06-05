@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { MDBContainer } from 'mdb-react-ui-kit';
-import axios from 'axios';
 import axiosInstance from './api/axiosInstance';
 import MyTodo from './components/MyTodo';
 import InputTodo from './components/InputTodo';
