@@ -3,6 +3,7 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import { MDBContainer } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import axiosInstance from './api/axiosInstance';
 import MyTodo from './components/MyTodo';
 import InputTodo from './components/InputTodo';
 import MyNavBar from "./components/MyNavBar";
@@ -39,7 +40,7 @@ function App() {
     if (!accessToken) return;
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/todos/', {
+        const response = await axiosInstance.get('http://127.0.0.1:8000/api/todos/', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },  
@@ -74,7 +75,7 @@ function App() {
         <MyNavBar setTodoItems={setTodoItems} />
       )}
       <Routes>
-        <Route path="/" element={
+        <Route path="/login" element={
           <Login
             setAccessToken={setAccessToken} 
           />
@@ -86,7 +87,7 @@ function App() {
           } 
         />
         <Route
-          path="/todos"
+          path="/"
           element={
             <MyTodo
               todoItems={todoItems}

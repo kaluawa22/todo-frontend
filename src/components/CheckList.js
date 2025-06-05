@@ -120,7 +120,7 @@ export default function Checklist({ checklistItems, markChecklistItemComplete, t
                                 />
                                 {/* Add a Save button next to the input */}
                                 <MDBBtn
-                                    color="primary"
+                                    color="black"
                                     onClick={(e) => {
                                     e.stopPropagation();  // Prevents parent div's onClick from being triggered
                                     // Handle save action here
@@ -129,12 +129,13 @@ export default function Checklist({ checklistItems, markChecklistItemComplete, t
                                     setEditingItemId(null);
                                     }}
                                     style={{ marginLeft: '8px' }}
+                                    className="d-flex justify-content-center align-items-center"
                                 >
                                     Save
                                 </MDBBtn>
                                 {/* Delete button */}
                                 <MDBBtn
-                                    color="primary"
+                                    color="black"
                                     onClick={(e) => {
                                     e.stopPropagation();  // Prevents parent div's onClick from being triggered
                                     console.log("Delete clicked");
@@ -142,6 +143,7 @@ export default function Checklist({ checklistItems, markChecklistItemComplete, t
                                     // Handle delete action here
                                     }}
                                     style={{ marginLeft: '8px' }}
+                                    className="d-flex justify-content-center align-items-center"
                                 >
                                     Delete
                                 </MDBBtn>
