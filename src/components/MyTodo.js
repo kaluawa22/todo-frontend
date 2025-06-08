@@ -9,6 +9,7 @@ import {
     MDBBadge  
   } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import axiosInstance from "../api/axiosInstance";
 import SelectedTodo from "./SelectedTodo";
 
 
@@ -58,6 +59,8 @@ export default function MyTodo(props) {
 
 
     const editTodoDescription = async (todoId, newTodoDesc) => {
+        const accessToken = sessionStorage.getItem('accessToken');
+
         try{
             // Optimistically update the state with the new todo desc before the backend call
             props.setTodoItems(prevItems =>
@@ -73,9 +76,14 @@ export default function MyTodo(props) {
             }));
 
              // Make the API call to update the todo name in the backend
-            const response = await axios.patch(`http://127.0.0.1:8000/api/todos/${todoId}/`, {
-                description: newTodoDesc
-            });
+            const response = await axiosInstance.patch(`http://127.0.0.1:8000/api/todos/${todoId}/`, {
+                description: newTodoDesc},
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                } 
+            );
         
             // Handle error by reverting the optimistic update if necessary
             if (response.status !== 200) {
@@ -95,6 +103,7 @@ export default function MyTodo(props) {
 
 
     const editTodoName = async (todoId, newTodoName) => {
+        const accessToken = sessionStorage.getItem('accessToken');
         try {
           // Optimistically update the state with the new todo name before the backend call
           props.setTodoItems(prevItems =>
@@ -110,9 +119,14 @@ export default function MyTodo(props) {
           }));
       
           // Make the API call to update the todo name in the backend
-          const response = await axios.patch(`http://127.0.0.1:8000/api/todos/${todoId}/`, {
-            title: newTodoName
-          });
+          const response = await axiosInstance.patch(`http://127.0.0.1:8000/api/todos/${todoId}/`, 
+            { title: newTodoName },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
       
           // Handle error by reverting the optimistic update if necessary
           if (response.status !== 200) {
@@ -129,10 +143,15 @@ export default function MyTodo(props) {
     
     // function to mark todo item as complete
     const markComplete = async(id) =>{
+        const accessToken = sessionStorage.getItem('accessToken');  
         try {
-            const response = await axios.patch(`http://127.0.0.1:8000/api/todos/${id}/`, {
-                completed: true
-        });
+            const response = await axiosInstance.patch(`http://127.0.0.1:8000/api/todos/${id}/`, 
+                { completed: true },
+                { headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                } 
+            );
 
         if (response.status === 200){
              // Update the state to reflect the change in the completed status
@@ -155,6 +174,7 @@ export default function MyTodo(props) {
     // Function to handle deleting Todo items
 
     const deleteTodoItem = async(todoId) => {
+        const accessToken = sessionStorage.getItem('accessToken');
         try{
             // Optimistically update the state by removing the deleted todo
             props.setTodoItems(prevItems =>
@@ -165,7 +185,13 @@ export default function MyTodo(props) {
             closeModal();
 
             // Make the API call to delete the todo item in the backend
-            const response = await axios.delete(`http://127.0.0.1:8000/api/todos/${todoId}/`);
+            const response = await axiosInstance.delete(`http://127.0.0.1:8000/api/todos/${todoId}/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }   
+            );
             // Check the response status to confirm deletion
             if (response.status !== 204) {
                 console.error("Failed to delete checklist item");
@@ -210,7 +236,7 @@ export default function MyTodo(props) {
           }));
       
           // Now, make the API call to delete the checklist item
-          const response = await axios.delete(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`);
+          const response = await axiosInstance.delete(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`);
       
           // Handle error by reverting the optimistic update (if necessary)
           if (response.status !== 204) {
@@ -233,7 +259,7 @@ export default function MyTodo(props) {
     // function to handle checklis item edits 
 
     const updateChecklistItem = async (todoId, checklistItemId, newChecklistTitle) => {
-
+        const accessToken = sessionStorage.getItem('accessToken');
         try{
             // const todo = props.todoItems.find(todo => todo.id === todoId);
             // const checklistItem = todo?.checklist_items.find(item => item.id === checklistItemId);
@@ -262,8 +288,8 @@ export default function MyTodo(props) {
             }));
 
              // Now, make the API call to update the backend
-             const response = await axios.patch(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`, {
-                title: newChecklistTitle
+             const response = await axiosInstance.patch(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`, 
+                {   title: newChecklistTitle
             });
     
             // Handle error by reverting the optimistic update (if necessary)
@@ -309,7 +335,7 @@ export default function MyTodo(props) {
             }));
     
             // Now, make the API call to update the backend
-            const response = await axios.patch(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`, {
+            const response = await axiosInstance.patch(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`, {
                 completed: newCompletedStatus
             });
     
@@ -365,7 +391,7 @@ export default function MyTodo(props) {
             }));
         
             // Now, make the API call to save the new checklist item to the backend
-            const response = await axios.post(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/`, {
+            const response = await axiosInstance.post(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/`, {
                 title: checklistName,
                 completed: checked
             });

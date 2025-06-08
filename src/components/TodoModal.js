@@ -14,6 +14,7 @@ import {
   MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem,
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import axiosInstance from '../api/axiosInstance';
 
 export default function TodoModal(props) {
   // const [basicModal, setBasicModal] = useState(false);
@@ -42,7 +43,7 @@ export default function TodoModal(props) {
       
     };
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         'http://127.0.0.1:8000/api/todos/', 
         newTask,
       {
