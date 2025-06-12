@@ -33,7 +33,7 @@ export default function MyNavBar(props) {
   const handleSignOut = () => {
     sessionStorage.removeItem('accessToken'); // Clear the access token from session storage    
     sessionStorage.removeItem('refreshToken'); // Clear the refresh token from session storage
-    navigate('/'); // Redirect to the login page
+    navigate('/login'); // Redirect to the login page
   };
 
   return (
