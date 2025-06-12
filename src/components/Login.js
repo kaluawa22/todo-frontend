@@ -11,7 +11,7 @@ import {
   MDBContainer
 } from 'mdb-react-ui-kit';
 import { use } from 'react';
-import axios from 'axios';
+import axiosInstance from '../api/axiosInstance'; // Adjust the import path as necessary
 
 export default function Login({setAccessToken}) {
 
@@ -33,7 +33,7 @@ export default function Login({setAccessToken}) {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/', {
+      const response = await axiosInstance.post('http://127.0.0.1:8000/api/token/', {
         username: formData.username,
         password: formData.password
       });
@@ -43,7 +43,7 @@ export default function Login({setAccessToken}) {
         sessionStorage.setItem('accessToken', response.data.access);
         sessionStorage.setItem('refreshToken', response.data.refresh);
         setAccessToken(response.data.access); // Update the access token in the parent component
-        navigate('/todos'); // Redirect to home page after successful login
+        navigate('/todos'); // Redirect Todos after successful login
       } else{
         alert("login failed, please try again!");
       }

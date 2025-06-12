@@ -215,6 +215,7 @@ export default function MyTodo(props) {
 
 
     const deleteChecklistItem = async (todoId, checklistItemId) => {
+        const accessToken = sessionStorage.getItem('accessToken');
         try {
           const todo = props.todoItems.find(todo => todo.id === todoId);
         //   const checklistItem = todo?.checklist_items.find(item => item.id === checklistItemId);
@@ -236,7 +237,14 @@ export default function MyTodo(props) {
           }));
       
           // Now, make the API call to delete the checklist item
-          const response = await axiosInstance.delete(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`);
+          const response = await axiosInstance.delete(
+            `http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+        );
       
           // Handle error by reverting the optimistic update (if necessary)
           if (response.status !== 204) {
@@ -289,8 +297,14 @@ export default function MyTodo(props) {
 
              // Now, make the API call to update the backend
              const response = await axiosInstance.patch(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`, 
-                {   title: newChecklistTitle
-            });
+                {   
+                    title: newChecklistTitle
+                 }, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`, 
+                        },
+                });
     
             // Handle error by reverting the optimistic update (if necessary)
             if (response.status !== 200) {
@@ -309,6 +323,7 @@ export default function MyTodo(props) {
   
     // function to mark check list item complete
     const markChecklistItemComplete = async (todoId, checklistItemId) => {
+        const accessToken = sessionStorage.getItem('accessToken');
         try {
             const todo = props.todoItems.find(todo => todo.id === todoId);
             const checklistItem = todo?.checklist_items.find(item => item.id === checklistItemId);
@@ -337,6 +352,11 @@ export default function MyTodo(props) {
             // Now, make the API call to update the backend
             const response = await axiosInstance.patch(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/${checklistItemId}/`, {
                 completed: newCompletedStatus
+            },
+            {            
+                headers: {
+                         Authorization: `Bearer ${accessToken}`,  
+                          },          
             });
     
             // Handle error by reverting the optimistic update (if necessary)
@@ -354,6 +374,7 @@ export default function MyTodo(props) {
 
     // function to add check list item 
     const addChecklistItem = async (todoId, checklistName, checked) => {
+        const accessToken = sessionStorage.getItem('accessToken');
         try {
             // Find the specific todo from the list
             const todo = props.todoItems.find(todo => todo.id === todoId);
@@ -394,6 +415,11 @@ export default function MyTodo(props) {
             const response = await axiosInstance.post(`http://127.0.0.1:8000/api/todos/${todoId}/checklist-items/`, {
                 title: checklistName,
                 completed: checked
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
             });
         
             // If the backend call is successful, update the state again with the real ID

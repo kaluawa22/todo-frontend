@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import response from 'axios';
+import axiosInstance from '../api/axiosInstance'; // Adjust the import path as necessary
 import {
   MDBBtn,
   MDBContainer,
@@ -46,7 +47,7 @@ export default function Register() {
       return;
     }
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register/', {
+      const response = await axiosInstance.post('http://127.0.0.1:8000/api/register/', {
         username: formData.username,
         password: formData.password,
         email: formData.email

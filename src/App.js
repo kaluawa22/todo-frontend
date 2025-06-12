@@ -74,7 +74,7 @@ function App() {
         <MyNavBar setTodoItems={setTodoItems} />
       )}
       <Routes>
-        <Route path="/login" element={
+        <Route path="/" element={
           <Login
             setAccessToken={setAccessToken} 
           />
@@ -86,7 +86,7 @@ function App() {
           } 
         />
         <Route
-          path="/"
+          path="/todos"
           element={
             <MyTodo
               todoItems={todoItems}

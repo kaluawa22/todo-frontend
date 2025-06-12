@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem,} from 'mdb-react-ui-kit';
-import axios from 'axios';
+import axiosInstance from '../api/axiosInstance'; // Adjust the import path as necessary
 
 export default function MyLabels(props) {
    const {todo} = props;
@@ -8,8 +8,15 @@ export default function MyLabels(props) {
    const [labelItems, setLabelItems] = useState([])
 
    const getLabelItems = async() => {
+    const accessToken = sessionStorage.getItem('accessToken');
     try {
-        const response = await axios.get('http://127.0.0.1:8000/api/labels/');
+        const response = await axiosInstance.get('http://127.0.0.1:8000/api/labels/',
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         // Update the state with todo items
         setLabelItems(response.data);
       } catch (error) {
