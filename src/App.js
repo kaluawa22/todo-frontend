@@ -9,7 +9,7 @@ import MyNavBar from "./components/MyNavBar";
 import Login from './components/Login';
 import Register from './components/Register';
 import NotFound from './components/NotFound';
-import { useLocation, Routes, Route } from 'react-router-dom';
+import { useLocation, Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
   const [todoItems, setTodoItems] = useState([]);
@@ -70,11 +70,24 @@ function App() {
   return (
     <MDBContainer>
       {/* Only show navbar if not on /login */}
-     {location.pathname !== '/' && location.pathname !== '/register' && (
+     {location.pathname !== '/login' && location.pathname !== '/register' && (
         <MyNavBar setTodoItems={setTodoItems} />
       )}
       <Routes>
+        
         <Route path="/" element={
+          accessToken ? (
+            <MyTodo
+              todoItems={todoItems}
+              setTodoItems={setTodoItems}
+            />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+        />
+        
+        <Route path="/login" element={
           <Login
             setAccessToken={setAccessToken} 
           />
